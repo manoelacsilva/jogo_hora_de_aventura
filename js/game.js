@@ -1,4 +1,8 @@
 const grid = document.querySelector('.grid');
+const spanPlayer = document.querySelector('.player');
+const timer = document.querySelector('.timer');
+const botaoJogarNovamente = document.getElementById('jogar-novamente');
+const botaoSair = document.getElementById('sair');
 
 const imagensHora = [
     'hora1',
@@ -15,6 +19,7 @@ const imagensHora = [
     'hora12',
     'hora13',
     'hora14',
+    'hora15'
 ];
 
 const createElement = (tag, className) => {
@@ -29,8 +34,12 @@ let secondCard = '';
 const checkEndGame = () => {
     const disabledCards = document.querySelectorAll('.disabled-card');
 
-    if (disabledCards.length === 28) {
-        alert('Parebéns, você conseguiu!');
+    if (disabledCards.length === 30) {
+        clearInterval(this.loop);
+
+        alert(`Parabéns, ${spanPlayer.innerHTML}! Você conseguiu em: ${timer.innerHTML} segundos.`);
+
+        finalizarJogo();
     }
 }
 
@@ -100,4 +109,58 @@ const loadGame = () => {
     });
 };
 
-loadGame();
+const startTimer = () => {
+    this.loop = setInterval(() => {
+        const currentTime = +timer.innerHTML;
+        timer.innerHTML = currentTime + 1;
+    }, 1000);
+};
+
+window.onload = () => {
+    spanPlayer.innerHTML = localStorage.getItem('player');
+
+    startTimer();
+    loadGame();
+};
+
+// Função para finalizar o jogo
+const finalizarJogo = () => {
+    document.querySelector('.botoes').style.display = 'flex';
+
+    clearInterval(this.loop);
+
+    botaoJogarNovamente.addEventListener('click', reiniciarJogo);
+};
+
+const reiniciarJogo = () => {
+    document.querySelector('.botoes').style.display = 'none';
+
+    timer.innerHTML = '0';
+
+    botaoJogarNovamente.removeEventListener('click', reiniciarJogo);
+
+    removerCartasDaTela();
+    startTimer();
+    loadGame();
+
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.classList.remove('reveal-card');
+    });
+
+    firstCard = '';
+    secondCard = '';
+};
+
+const removerCartasDaTela = () => {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.remove();
+    });
+};
+
+// Adiciona um ouvinte de evento ao botão "Sair"
+botaoSair.addEventListener('click', () => {
+    window.location.href = '../index.html';
+});
+

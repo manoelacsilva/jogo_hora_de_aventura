@@ -1,11 +1,36 @@
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-image: url(../images/capa1.jpg);
+    background-size: cover;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px 50px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-size: 28px;
+    width: 100%;
+    max-width: 1400px;
+    padding: 30px;
+    margin-bottom: 50px;
+    border-radius: 8px;
+    border: 5px solid rgba(0, 0, 0, 0.6);
+}
+
 .grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 14px;
     width: 100%;
-    max-width: 1024px;
-    margin: 50px auto;
-    padding: 0 50px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .card {
@@ -15,6 +40,7 @@
     position: relative;
     transition: all 400ms ease;
     transform-style: preserve-3d;
+    background-color: #ccc;
 }
 
 .face {
@@ -44,4 +70,80 @@
 .disabled-card {
     filter: saturate(0);
     opacity: 0.7;
+}
+
+.botoes {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 290px;
+}
+
+button {
+    border-radius: 30px;
+    cursor: pointer;
+    padding: 15px;
+    font-size: 20px;
+    margin-top: 50px;
+    background-color: #152a95;
+    border: 3px solid #2f75e0;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #2b47bb;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        width: 100%;
+        max-width: 800px;
+    }
+
+    header {
+        width: 100%;
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 468px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        width: 100%;
+        max-width: 300px;
+        gap: 8px;
+    }
+
+    header {
+        padding: 10px;
+        font-size: 18px;
+        margin-bottom: 20px;
+        border: 2px solid rgba(0, 0, 0, 0.6);
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .face {
+        border: 2px solid rgb(192, 4, 4);
+    }
+
+    button {
+        padding: 8px;
+        font-size: 14px;
+        margin-top: 20px;
+        border: 2px solid #2f75e0;
+    }
+
+    .botoes {
+        width: 100%;
+        max-width: 190px;
+    }
+
+    main {
+        padding: 20px 20px;
+    }
 }
