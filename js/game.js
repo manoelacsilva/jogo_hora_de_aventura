@@ -1,0 +1,103 @@
+const grid = document.querySelector('.grid');
+
+const imagensHora = [
+    'hora1',
+    'hora2',
+    'hora3',
+    'hora4',
+    'hora5',
+    'hora6',
+    'hora7',
+    'hora8',
+    'hora9',
+    'hora10',
+    'hora11',
+    'hora12',
+    'hora13',
+    'hora14',
+];
+
+const createElement = (tag, className) => {
+    const element = document.createElement(tag);
+    element.className = className;
+    return element;
+};
+
+let firstCard = '';
+let secondCard = '';
+
+const checkEndGame = () => {
+    const disabledCards = document.querySelectorAll('.disabled-card');
+
+    if (disabledCards.length === 28) {
+        alert('Parebéns, você conseguiu!');
+    }
+}
+
+const checkCards = () => {
+    const firstHora = firstCard.getAttribute('data-hora');
+    const secondHora = secondCard.getAttribute('data-hora');
+
+    if (firstHora === secondHora) {
+        firstCard.firstChild.classList.add('disabled-card');
+        secondCard.firstChild.classList.add('disabled-card');
+
+        firstCard = '';
+        secondCard = '';
+
+        checkEndGame();
+    } else {
+        setTimeout(() => {
+            firstCard.classList.remove('reveal-card');
+            secondCard.classList.remove('reveal-card');
+
+            firstCard = '';
+            secondCard = '';
+        }, 700);
+    };
+};
+
+const revealCard = ({ target }) => {
+    if (target.parentNode.className.includes('reveal-card')) {
+        return;
+    };
+
+    if (firstCard === '') {
+        target.parentNode.classList.add('reveal-card');
+        firstCard = target.parentNode;
+    } else if (secondCard === '') {
+        target.parentNode.classList.add('reveal-card');
+        secondCard = target.parentNode;
+
+        checkCards();
+    };
+};
+
+const createCard = (imagemHora) => {
+    const card = createElement('div', 'card');
+    const front = createElement('div', 'face front');
+    const back = createElement('div', 'face back');
+
+    front.style.backgroundImage = `url('../images/${imagemHora}.jpg')`;
+
+    card.appendChild(front);
+    card.appendChild(back);
+
+    card.addEventListener('click', revealCard);
+    card.setAttribute('data-hora', imagemHora);
+
+    return card;
+};
+
+const loadGame = () => {
+    const duplicateImagensHora = [ ...imagensHora, ...imagensHora];
+
+    const shuffledArray = duplicateImagensHora.sort(() => Math.random() - 0.5);
+
+    shuffledArray.forEach((imagemHora) => {
+        const card = createCard(imagemHora);
+        grid.appendChild(card);
+    });
+};
+
+loadGame();
